@@ -60,6 +60,154 @@ VMResult VM::run(const Chunk& chunk) {
                 return VMResult::OK;
             }
             
+            // Arithmetic operations
+            case OpCode::OP_ADD: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for addition");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                if (!a.is_integer() || !b.is_integer()) {
+                    runtime_error("Addition requires integer values");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                push(Value(a.as_integer() + b.as_integer()));
+                break;
+            }
+            
+            case OpCode::OP_SUBTRACT: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for subtraction");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                if (!a.is_integer() || !b.is_integer()) {
+                    runtime_error("Subtraction requires integer values");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                push(Value(a.as_integer() - b.as_integer()));
+                break;
+            }
+            
+            case OpCode::OP_MULTIPLY: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for multiplication");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                if (!a.is_integer() || !b.is_integer()) {
+                    runtime_error("Multiplication requires integer values");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                push(Value(a.as_integer() * b.as_integer()));
+                break;
+            }
+            
+            case OpCode::OP_DIVIDE: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for division");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                if (!a.is_integer() || !b.is_integer()) {
+                    runtime_error("Division requires integer values");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                if (b.as_integer() == 0) {
+                    runtime_error("Division by zero");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                push(Value(a.as_integer() / b.as_integer()));
+                break;
+            }
+            
+            // Comparison operations
+            case OpCode::OP_EQUAL: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for equality comparison");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                push(Value(a == b));
+                break;
+            }
+            
+            case OpCode::OP_NOT_EQUAL: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for inequality comparison");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                push(Value(a != b));
+                break;
+            }
+            
+            case OpCode::OP_LESS: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for less than comparison");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                if (!a.is_integer() || !b.is_integer()) {
+                    runtime_error("Less than comparison requires integer values");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                push(Value(a.as_integer() < b.as_integer()));
+                break;
+            }
+            
+            case OpCode::OP_LESS_EQUAL: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for less or equal comparison");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                if (!a.is_integer() || !b.is_integer()) {
+                    runtime_error("Less or equal comparison requires integer values");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                push(Value(a.as_integer() <= b.as_integer()));
+                break;
+            }
+            
+            case OpCode::OP_GREATER: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for greater than comparison");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                if (!a.is_integer() || !b.is_integer()) {
+                    runtime_error("Greater than comparison requires integer values");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                push(Value(a.as_integer() > b.as_integer()));
+                break;
+            }
+            
+            case OpCode::OP_GREATER_EQUAL: {
+                if (stack_.size() < 2) {
+                    runtime_error("Not enough values on stack for greater or equal comparison");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                Value b = pop();
+                Value a = pop();
+                if (!a.is_integer() || !b.is_integer()) {
+                    runtime_error("Greater or equal comparison requires integer values");
+                    return VMResult::RUNTIME_ERROR;
+                }
+                push(Value(a.as_integer() >= b.as_integer()));
+                break;
+            }
+            
             default: {
                 runtime_error("Unknown opcode: " + std::to_string(static_cast<int>(instruction)));
                 return VMResult::RUNTIME_ERROR;

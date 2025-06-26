@@ -103,6 +103,60 @@ CompileResult Compiler::compile_expression(const Expression& expr, Chunk& chunk)
             }
         }
         
+        case ASTNodeType::BINARY_EXPRESSION: {
+            const auto& binary_expr = static_cast<const BinaryExpression&>(expr);
+            debug_print("Compiling binary expression");
+            
+            // Compile left operand
+            if (compile_expression(*binary_expr.left, chunk) != CompileResult::OK) {
+                return CompileResult::ERROR;
+            }
+            
+            // Compile right operand
+            if (compile_expression(*binary_expr.right, chunk) != CompileResult::OK) {
+                return CompileResult::ERROR;
+            }
+            
+            // Emit the operator instruction
+            switch (binary_expr.operator_) {
+                case BinaryOperator::ADD:
+                    chunk.write_opcode(OpCode::OP_ADD);
+                    break;
+                case BinaryOperator::SUBTRACT:
+                    chunk.write_opcode(OpCode::OP_SUBTRACT);
+                    break;
+                case BinaryOperator::MULTIPLY:
+                    chunk.write_opcode(OpCode::OP_MULTIPLY);
+                    break;
+                case BinaryOperator::DIVIDE:
+                    chunk.write_opcode(OpCode::OP_DIVIDE);
+                    break;
+                case BinaryOperator::EQUAL:
+                    chunk.write_opcode(OpCode::OP_EQUAL);
+                    break;
+                case BinaryOperator::NOT_EQUAL:
+                    chunk.write_opcode(OpCode::OP_NOT_EQUAL);
+                    break;
+                case BinaryOperator::LESS_THAN:
+                    chunk.write_opcode(OpCode::OP_LESS);
+                    break;
+                case BinaryOperator::LESS_EQUAL:
+                    chunk.write_opcode(OpCode::OP_LESS_EQUAL);
+                    break;
+                case BinaryOperator::GREATER_THAN:
+                    chunk.write_opcode(OpCode::OP_GREATER);
+                    break;
+                case BinaryOperator::GREATER_EQUAL:
+                    chunk.write_opcode(OpCode::OP_GREATER_EQUAL);
+                    break;
+                default:
+                    compile_error("Unsupported binary operator");
+                    return CompileResult::ERROR;
+            }
+            
+            return CompileResult::OK;
+        }
+        
         default:
             compile_error("Unsupported expression type");
             return CompileResult::ERROR;

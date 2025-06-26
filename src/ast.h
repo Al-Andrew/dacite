@@ -18,6 +18,26 @@ using ExpressionPtr = std::unique_ptr<Expression>;
 using StatementPtr = std::unique_ptr<Statement>;
 using DeclarationPtr = std::unique_ptr<Declaration>;
 
+/// Binary operators for expressions
+enum class BinaryOperator {
+    // Arithmetic operators
+    ADD,        // +
+    SUBTRACT,   // -
+    MULTIPLY,   // *
+    DIVIDE,     // /
+    
+    // Comparison operators
+    EQUAL,          // ==
+    NOT_EQUAL,      // !=
+    LESS_THAN,      // <
+    LESS_EQUAL,     // <=
+    GREATER_THAN,   // >
+    GREATER_EQUAL   // >=
+};
+
+/// Convert binary operator to string for debugging
+std::string binary_operator_to_string(BinaryOperator op);
+
 /// AST node types for visitor pattern
 enum class ASTNodeType {
     PROGRAM,
@@ -26,6 +46,7 @@ enum class ASTNodeType {
     RETURN_STATEMENT,
     BLOCK_STATEMENT,
     INTEGER_LITERAL,
+    BINARY_EXPRESSION,
     TYPE
 };
 
@@ -88,6 +109,25 @@ public:
 
     std::string to_string() const override {
         return "IntegerLiteral(" + value + ")";
+    }
+};
+
+/// Binary expression (e.g., a + b, x == y)
+class BinaryExpression : public Expression {
+public:
+    ExpressionPtr left;
+    BinaryOperator operator_;
+    ExpressionPtr right;
+
+    BinaryExpression(ExpressionPtr left, BinaryOperator op, ExpressionPtr right, const SourceSpan& span)
+        : Expression(ASTNodeType::BINARY_EXPRESSION, span)
+        , left(std::move(left))
+        , operator_(op)
+        , right(std::move(right)) {}
+
+    std::string to_string() const override {
+        return "BinaryExpression(" + left->to_string() + " " + 
+               binary_operator_to_string(operator_) + " " + right->to_string() + ")";
     }
 };
 
