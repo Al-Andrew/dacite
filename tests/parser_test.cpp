@@ -165,6 +165,26 @@ TEST(missing_semicolon) {
     ASSERT_TRUE(parser.has_errors());
 }
 
+TEST(void_return_type) {
+    std::string source = "fn test() void { return; }";
+    auto tokens = tokenize(source);
+    
+    ParserConfig config;
+    Parser parser(std::move(tokens), config);
+    auto program = parser.parse();
+    
+    ASSERT_FALSE(parser.has_errors());
+    ASSERT_NOT_NULL(program);
+    ASSERT_EQ(program->declarations.size(), 1);
+    
+    // Check if the declaration is a function declaration
+    auto* func_decl = dynamic_cast<FunctionDeclaration*>(program->declarations[0].get());
+    ASSERT_NOT_NULL(func_decl);
+    ASSERT_EQ(func_decl->function_name, "test");
+    ASSERT_NOT_NULL(func_decl->return_type);
+    ASSERT_EQ(func_decl->return_type->name, "void");
+}
+
 TEST(debug_mode) {
     std::string source = "package main;\n\nfn main() i32 { return 5; }";
     auto tokens = tokenize(source);
@@ -189,6 +209,7 @@ int main() {
     RUN_TEST(ast_to_string);
     RUN_TEST(parser_error_handling);
     RUN_TEST(missing_semicolon);
+    RUN_TEST(void_return_type);
     RUN_TEST(debug_mode);
     
     std::cout << "All tests passed!" << std::endl;

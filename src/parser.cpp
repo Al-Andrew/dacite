@@ -154,8 +154,18 @@ std::unique_ptr<FunctionDeclaration> Parser::parse_function_declaration() {
 std::unique_ptr<Type> Parser::parse_type() {
     debug_print("Parsing type");
     
-    auto type_token = consume(TokenType::IDENTIFIER, "Expected type name");
-    return std::make_unique<Type>(type_token.value, type_token.span);
+    if (check(TokenType::VOID)) {
+        auto type_token = current_token();
+        advance();
+        return std::make_unique<Type>(type_token.value, type_token.span);
+    } else if (check(TokenType::IDENTIFIER)) {
+        auto type_token = current_token();
+        advance();
+        return std::make_unique<Type>(type_token.value, type_token.span);
+    } else {
+        report_error("Expected type name");
+        return nullptr;
+    }
 }
 
 std::unique_ptr<BlockStatement> Parser::parse_block_statement() {

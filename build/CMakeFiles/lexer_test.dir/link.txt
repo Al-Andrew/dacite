@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/lexer_test.dir/link.d CMakeFiles/lexer_test.dir/tests/lexer_test.cpp.o CMakeFiles/lexer_test.dir/src/lexer.cpp.o CMakeFiles/lexer_test.dir/src/parser.cpp.o CMakeFiles/lexer_test.dir/src/token.cpp.o -o /home/runner/work/dacite/dacite/.bin/lexer_test
