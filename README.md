@@ -34,6 +34,14 @@ cmake --build --preset default
 ./.bin/lexer_test
 ```
 
+## Testing
+
+The project includes comprehensive unit tests and continuous integration:
+
+- **Local testing**: Run `./.bin/lexer_test` after building
+- **CI/CD**: GitHub Actions automatically tests debug and release builds on every push and pull request
+- **Coverage**: Tests cover all lexer functionality including error cases and edge conditions
+
 ## Language Example
 
 ```dacite
