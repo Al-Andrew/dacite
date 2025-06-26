@@ -17,3 +17,4 @@ add_executable(dacite ${CMAKE_SOURCE_DIR}/src/main.cpp ${SOURCES})
 # Add test executables
 add_executable(lexer_test ${CMAKE_SOURCE_DIR}/tests/lexer_test.cpp ${SOURCES})
 add_executable(parser_test ${CMAKE_SOURCE_DIR}/tests/parser_test.cpp ${SOURCES})
+add_executable(vm_test ${CMAKE_SOURCE_DIR}/tests/vm_test.cpp ${SOURCES})

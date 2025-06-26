@@ -32,6 +32,7 @@ jobs:
       run: |
         ./.bin/lexer_test
         ./.bin/parser_test
+        ./.bin/vm_test
       
     - name: Test dacite executable
       run: |

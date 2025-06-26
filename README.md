@@ -43,6 +43,37 @@ auto program = parser.parse();
 std::cout << program->to_string() << std::endl;
 ```
 
+### Virtual Machine ✅
+
+The stack-based virtual machine executes bytecode generated from the AST. Key features:
+
+- **Stack-based execution**: Values stored on a runtime stack
+- **Bytecode instructions**: OP_CONSTANT, OP_RETURN opcodes
+- **Value system**: Supports integers and nil values
+- **Chunk system**: Bytecode storage with constant pools
+- **Error handling**: Runtime error detection and reporting
+- **Debug mode**: Instruction tracing and stack visualization
+- **Comprehensive testing**: Full test suite covering VM functionality
+
+Example usage:
+```cpp
+// Parse source code
+dacite::Lexer lexer(source);
+auto tokens = lexer.tokenize_all();
+dacite::Parser parser(std::move(tokens));
+auto program = parser.parse();
+
+// Compile to bytecode
+dacite::Compiler compiler;
+dacite::Chunk chunk;
+compiler.compile(*program, chunk);
+
+// Execute in VM
+dacite::VM vm;
+dacite::VMResult result = vm.run(chunk);
+dacite::Value return_value = vm.peek_stack_top();
+```
+
 ## Building
 
 ```bash
@@ -58,6 +89,7 @@ cmake --build --preset default
 # Run tests
 ./.bin/lexer_test
 ./.bin/parser_test
+./.bin/vm_test
 ```
 
 ## Testing
@@ -95,6 +127,14 @@ dacite/
 │   ├── lexer.cpp  # Lexer implementation
 │   ├── parser.h   # Parser interface
 │   ├── parser.cpp # Parser implementation
+│   ├── compiler.h # Compiler interface
+│   ├── compiler.cpp # Compiler implementation
+│   ├── vm.h       # Virtual machine interface
+│   ├── vm.cpp     # Virtual machine implementation
+│   ├── chunk.h    # Bytecode chunk interface
+│   ├── chunk.cpp  # Bytecode chunk implementation
+│   ├── value.h    # Value system interface
+│   ├── value.cpp  # Value system implementation
 │   ├── ast.h      # AST node definitions
 │   ├── token.h    # Token definitions
 │   ├── token.cpp  # Token utilities
@@ -102,6 +142,7 @@ dacite/
 ├── tests/         # Test files
 │   ├── lexer_test.cpp  # Lexer unit tests
 │   ├── parser_test.cpp # Parser unit tests
+│   ├── vm_test.cpp     # VM unit tests
 │   └── test_*.dt       # Test source files
 ├── docs/          # Documentation
 │   └── lexer.md   # Lexer documentation
