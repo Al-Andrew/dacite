@@ -1,0 +1,5 @@
+/home/runner/work/dacite/dacite/.build/CMakeFiles/dacite.dir
+/home/runner/work/dacite/dacite/.build/CMakeFiles/lexer_test.dir
+/home/runner/work/dacite/dacite/.build/CMakeFiles/parser_test.dir
+/home/runner/work/dacite/dacite/.build/CMakeFiles/edit_cache.dir
+/home/runner/work/dacite/dacite/.build/CMakeFiles/rebuild_cache.dir

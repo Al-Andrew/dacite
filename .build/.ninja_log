@@ -1,0 +1,16 @@
+# ninja log v6
+2	1189	1750951271033612795	CMakeFiles/dacite.dir/src/token.cpp.o	752fe513bcc89b20
+4	1432	1750951271035612808	CMakeFiles/lexer_test.dir/src/lexer.cpp.o	106d51ad099adb5d
+1	1451	1750951271032612788	CMakeFiles/dacite.dir/src/main.cpp.o	b27aa7b327b380cd
+3	1508	1750951271034612801	CMakeFiles/lexer_test.dir/tests/lexer_test.cpp.o	4e23b862d4e6cf9a
+1	1509	1750951271032612788	CMakeFiles/dacite.dir/src/lexer.cpp.o	7bfd6a82eb68939a
+1	2277	1750951271032612788	CMakeFiles/dacite.dir/src/parser.cpp.o	68b7b39f7b5fcffd
+1432	2347	1750951272463622140	CMakeFiles/lexer_test.dir/src/token.cpp.o	c492661eba866824
+2348	2550	1750951273379628074	/home/runner/work/dacite/dacite/.bin/dacite	4085b5c194b70ad0
+1508	2825	1750951272539622637	CMakeFiles/parser_test.dir/src/lexer.cpp.o	8043bbb662fe2d17
+1451	2935	1750951272483622271	CMakeFiles/parser_test.dir/tests/parser_test.cpp.o	15e2966cb263ec6e
+1189	2975	1750951272220620552	CMakeFiles/lexer_test.dir/src/parser.cpp.o	e2734a7469c135af
+2278	3005	1750951273309627624	CMakeFiles/parser_test.dir/src/token.cpp.o	894aab9389bb96ad
+2975	3034	1750951274006632103	/home/runner/work/dacite/dacite/.bin/lexer_test	9396caea2051b306
+1509	3210	1750951272540622643	CMakeFiles/parser_test.dir/src/parser.cpp.o	5e76a09c49e808f9
+3210	3264	1750951274241633613	/home/runner/work/dacite/dacite/.bin/parser_test	fba21154b5b69e9a
