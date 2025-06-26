@@ -14,6 +14,6 @@ list(REMOVE_ITEM SOURCES ${CMAKE_SOURCE_DIR}/src/main.cpp)
 
 add_executable(dacite ${CMAKE_SOURCE_DIR}/src/main.cpp ${SOURCES})
 
-# Add test executable
-file(GLOB TEST_SOURCES ${CMAKE_SOURCE_DIR}/tests/*.cpp)
-add_executable(lexer_test ${TEST_SOURCES} ${SOURCES})
+# Add test executables
+add_executable(lexer_test ${CMAKE_SOURCE_DIR}/tests/lexer_test.cpp ${SOURCES})
+add_executable(parser_test ${CMAKE_SOURCE_DIR}/tests/parser_test.cpp ${SOURCES})
