@@ -1,0 +1,22 @@
+// Test various number formats
+package test;
+
+fn test_numbers() void {
+    // Decimal numbers
+    var dec = 123;
+    var decimal_float = 3.14159;
+    
+    // Hexadecimal numbers  
+    var hex = 0xFF;
+    var hex2 = 0x1A2B;
+    
+    // Binary numbers
+    var bin = 0b1010;
+    var bin2 = 0b11110000;
+    
+    // Octal numbers
+    var oct = 0755;
+    var oct2 = 0123;
+    
+    return;
+}

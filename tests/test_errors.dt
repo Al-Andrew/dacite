@@ -1,0 +1,7 @@
+// Error test cases
+"unterminated string
+'unterminated char
+/* unterminated comment
+invalid_escape = "\z";
+empty_char = '';
+unknown_char = @;

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build_type: [debug, release]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential ninja-build
+        
+    - name: Configure project (${{ matrix.build_type }})
+      run: cmake --preset ${{ matrix.build_type }}
+      
+    - name: Build project (${{ matrix.build_type }})
+      run: cmake --build --preset ${{ matrix.build_type }}
+      
+    - name: Run tests
+      run: ./.bin/lexer_test
+      
+    - name: Test dacite executable
+      run: |
+        echo 'package main; fn main() void { return 0; }' > test.dt
+        ./.bin/dacite test.dt
+        rm test.dt
