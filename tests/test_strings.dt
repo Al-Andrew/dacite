@@ -1,0 +1,23 @@
+// Test string and character literals
+package test;
+
+fn test_strings() void {
+    // Regular strings
+    var greeting = "Hello, world!";
+    var name = "Alice";
+    
+    // Strings with escape sequences
+    var with_newline = "Line 1\nLine 2";
+    var with_tab = "Column 1\tColumn 2";
+    var with_quotes = "He said \"Hello!\"";
+    var with_backslash = "Path: C:\\Program Files\\";
+    
+    // Character literals
+    var letter = 'a';
+    var newline_char = '\n';
+    var tab_char = '\t';
+    var quote_char = '\'';
+    var backslash_char = '\\';
+    
+    return;
+}
