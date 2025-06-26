@@ -199,6 +199,116 @@ TEST(debug_mode) {
     ASSERT_NOT_NULL(program);
 }
 
+TEST(arithmetic_expression) {
+    std::string source = "package main; fn main() i32 { return 2 + 3 * 4; }";
+    auto tokens = tokenize(source);
+    
+    ParserConfig config;
+    Parser parser(std::move(tokens), config);
+    auto program = parser.parse();
+    ASSERT_FALSE(parser.has_errors());
+    ASSERT_NOT_NULL(program);
+    
+    // Verify the structure: should be BinaryExpression(2, +, BinaryExpression(3, *, 4))
+    auto* func_decl = dynamic_cast<const FunctionDeclaration*>(program->declarations[0].get());
+    ASSERT_NOT_NULL(func_decl);
+    
+    auto* block = func_decl->body.get();
+    ASSERT_NOT_NULL(block);
+    ASSERT_EQ(block->statements.size(), 1);
+    
+    auto* return_stmt = dynamic_cast<const ReturnStatement*>(block->statements[0].get());
+    ASSERT_NOT_NULL(return_stmt);
+    ASSERT_NOT_NULL(return_stmt->expression);
+    
+    auto* binary_expr = dynamic_cast<const BinaryExpression*>(return_stmt->expression.get());
+    ASSERT_NOT_NULL(binary_expr);
+    ASSERT_EQ(binary_expr->operator_, BinaryOperator::ADD);
+    
+    // Left side should be IntegerLiteral(2)
+    auto* left_literal = dynamic_cast<const IntegerLiteral*>(binary_expr->left.get());
+    ASSERT_NOT_NULL(left_literal);
+    ASSERT_EQ(left_literal->value, "2");
+    
+    // Right side should be BinaryExpression(3, *, 4)
+    auto* right_binary = dynamic_cast<const BinaryExpression*>(binary_expr->right.get());
+    ASSERT_NOT_NULL(right_binary);
+    ASSERT_EQ(right_binary->operator_, BinaryOperator::MULTIPLY);
+}
+
+TEST(comparison_expression) {
+    std::string source = "package main; fn main() i32 { return 5 > 3; }";
+    auto tokens = tokenize(source);
+    
+    ParserConfig config;
+    Parser parser(std::move(tokens), config);
+    auto program = parser.parse();
+    ASSERT_FALSE(parser.has_errors());
+    ASSERT_NOT_NULL(program);
+    
+    auto* func_decl = dynamic_cast<const FunctionDeclaration*>(program->declarations[0].get());
+    auto* return_stmt = dynamic_cast<const ReturnStatement*>(func_decl->body->statements[0].get());
+    auto* binary_expr = dynamic_cast<const BinaryExpression*>(return_stmt->expression.get());
+    
+    ASSERT_NOT_NULL(binary_expr);
+    ASSERT_EQ(binary_expr->operator_, BinaryOperator::GREATER_THAN);
+    
+    auto* left_literal = dynamic_cast<const IntegerLiteral*>(binary_expr->left.get());
+    auto* right_literal = dynamic_cast<const IntegerLiteral*>(binary_expr->right.get());
+    
+    ASSERT_NOT_NULL(left_literal);
+    ASSERT_NOT_NULL(right_literal);
+    ASSERT_EQ(left_literal->value, "5");
+    ASSERT_EQ(right_literal->value, "3");
+}
+
+TEST(complex_precedence) {
+    std::string source = "package main; fn main() i32 { return 10 - 4 / 2 + 1; }";
+    auto tokens = tokenize(source);
+    
+    ParserConfig config;
+    Parser parser(std::move(tokens), config);
+    auto program = parser.parse();
+    ASSERT_FALSE(parser.has_errors());
+    ASSERT_NOT_NULL(program);
+    
+    // Should parse as: ((10 - (4 / 2)) + 1)
+    auto* func_decl = dynamic_cast<const FunctionDeclaration*>(program->declarations[0].get());
+    auto* return_stmt = dynamic_cast<const ReturnStatement*>(func_decl->body->statements[0].get());
+    auto* outer_binary = dynamic_cast<const BinaryExpression*>(return_stmt->expression.get());
+    
+    ASSERT_NOT_NULL(outer_binary);
+    ASSERT_EQ(outer_binary->operator_, BinaryOperator::ADD);
+    
+    // Left side should be (10 - (4 / 2))
+    auto* left_binary = dynamic_cast<const BinaryExpression*>(outer_binary->left.get());
+    ASSERT_NOT_NULL(left_binary);
+    ASSERT_EQ(left_binary->operator_, BinaryOperator::SUBTRACT);
+    
+    // The right side of the subtraction should be (4 / 2)
+    auto* division = dynamic_cast<const BinaryExpression*>(left_binary->right.get());
+    ASSERT_NOT_NULL(division);
+    ASSERT_EQ(division->operator_, BinaryOperator::DIVIDE);
+}
+
+TEST(equality_expressions) {
+    std::string source = "package main; fn main() i32 { return 5 == 5; }";
+    auto tokens = tokenize(source);
+    
+    ParserConfig config;
+    Parser parser(std::move(tokens), config);
+    auto program = parser.parse();
+    ASSERT_FALSE(parser.has_errors());
+    ASSERT_NOT_NULL(program);
+    
+    auto* func_decl = dynamic_cast<const FunctionDeclaration*>(program->declarations[0].get());
+    auto* return_stmt = dynamic_cast<const ReturnStatement*>(func_decl->body->statements[0].get());
+    auto* binary_expr = dynamic_cast<const BinaryExpression*>(return_stmt->expression.get());
+    
+    ASSERT_NOT_NULL(binary_expr);
+    ASSERT_EQ(binary_expr->operator_, BinaryOperator::EQUAL);
+}
+
 int main() {
     std::cout << "Running Parser Tests..." << std::endl;
     
@@ -211,6 +321,10 @@ int main() {
     RUN_TEST(missing_semicolon);
     RUN_TEST(void_return_type);
     RUN_TEST(debug_mode);
+    RUN_TEST(arithmetic_expression);
+    RUN_TEST(comparison_expression);
+    RUN_TEST(complex_precedence);
+    RUN_TEST(equality_expressions);
     
     std::cout << "All tests passed!" << std::endl;
     return 0;

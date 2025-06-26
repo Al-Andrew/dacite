@@ -1,5 +1,6 @@
 #include "parser.h"
 #include <iostream>
+#include <stdexcept>
 
 namespace dacite {
 
@@ -220,7 +221,63 @@ std::unique_ptr<ReturnStatement> Parser::parse_return_statement() {
 std::unique_ptr<Expression> Parser::parse_expression() {
     debug_print("Parsing expression");
     
-    return parse_primary_expression();
+    return parse_comparison();
+}
+
+std::unique_ptr<Expression> Parser::parse_comparison() {
+    debug_print("Parsing comparison");
+    
+    auto expr = parse_term();
+    
+    while (check(TokenType::EQUAL) || check(TokenType::NOT_EQUAL) ||
+           check(TokenType::LESS_THAN) || check(TokenType::LESS_EQUAL) ||
+           check(TokenType::GREATER_THAN) || check(TokenType::GREATER_EQUAL)) {
+        auto operator_token = current_token();
+        advance();
+        auto right = parse_term();
+        
+        SourceSpan span(expr->span.start, right->span.end);
+        auto op = token_to_binary_operator(operator_token.type);
+        expr = std::make_unique<BinaryExpression>(std::move(expr), op, std::move(right), span);
+    }
+    
+    return expr;
+}
+
+std::unique_ptr<Expression> Parser::parse_term() {
+    debug_print("Parsing term");
+    
+    auto expr = parse_factor();
+    
+    while (check(TokenType::PLUS) || check(TokenType::MINUS)) {
+        auto operator_token = current_token();
+        advance();
+        auto right = parse_factor();
+        
+        SourceSpan span(expr->span.start, right->span.end);
+        auto op = token_to_binary_operator(operator_token.type);
+        expr = std::make_unique<BinaryExpression>(std::move(expr), op, std::move(right), span);
+    }
+    
+    return expr;
+}
+
+std::unique_ptr<Expression> Parser::parse_factor() {
+    debug_print("Parsing factor");
+    
+    auto expr = parse_primary_expression();
+    
+    while (check(TokenType::MULTIPLY) || check(TokenType::DIVIDE)) {
+        auto operator_token = current_token();
+        advance();
+        auto right = parse_primary_expression();
+        
+        SourceSpan span(expr->span.start, right->span.end);
+        auto op = token_to_binary_operator(operator_token.type);
+        expr = std::make_unique<BinaryExpression>(std::move(expr), op, std::move(right), span);
+    }
+    
+    return expr;
 }
 
 std::unique_ptr<Expression> Parser::parse_primary_expression() {
@@ -254,6 +311,24 @@ void Parser::synchronize() {
         }
         
         advance();
+    }
+}
+
+BinaryOperator Parser::token_to_binary_operator(TokenType token_type) {
+    switch (token_type) {
+        case TokenType::PLUS:           return BinaryOperator::ADD;
+        case TokenType::MINUS:          return BinaryOperator::SUBTRACT;
+        case TokenType::MULTIPLY:       return BinaryOperator::MULTIPLY;
+        case TokenType::DIVIDE:         return BinaryOperator::DIVIDE;
+        case TokenType::EQUAL:          return BinaryOperator::EQUAL;
+        case TokenType::NOT_EQUAL:      return BinaryOperator::NOT_EQUAL;
+        case TokenType::LESS_THAN:      return BinaryOperator::LESS_THAN;
+        case TokenType::LESS_EQUAL:     return BinaryOperator::LESS_EQUAL;
+        case TokenType::GREATER_THAN:   return BinaryOperator::GREATER_THAN;
+        case TokenType::GREATER_EQUAL:  return BinaryOperator::GREATER_EQUAL;
+        default:
+            // This should never happen if called correctly
+            throw std::runtime_error("Invalid binary operator token");
     }
 }
 

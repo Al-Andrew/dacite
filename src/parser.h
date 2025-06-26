@@ -71,7 +71,13 @@ private:
     std::unique_ptr<Statement> parse_statement();
     std::unique_ptr<ReturnStatement> parse_return_statement();
     std::unique_ptr<Expression> parse_expression();
+    std::unique_ptr<Expression> parse_comparison();
+    std::unique_ptr<Expression> parse_term();
+    std::unique_ptr<Expression> parse_factor();
     std::unique_ptr<Expression> parse_primary_expression();
+
+    // Helper methods for expression parsing
+    BinaryOperator token_to_binary_operator(TokenType token_type);
 
     // Synchronization for error recovery
     void synchronize();

@@ -359,12 +359,182 @@ TEST(end_to_end_basic_example) {
     std::cout << "✅ End-to-end test successful! Program returned: " << result.to_string() << std::endl;
 }
 
+// === Expression Tests ===
+
+TEST(value_boolean) {
+    // Test boolean value creation and operations
+    Value true_val(true);
+    Value false_val(false);
+    
+    ASSERT_TRUE(true_val.is_boolean());
+    ASSERT_TRUE(false_val.is_boolean());
+    
+    ASSERT_TRUE(true_val.as_boolean());
+    ASSERT_FALSE(false_val.as_boolean());
+    
+    ASSERT_EQ(true_val.to_string(), "true");
+    ASSERT_EQ(false_val.to_string(), "false");
+    
+    // Test equality
+    ASSERT_EQ(true_val, Value(true));
+    ASSERT_EQ(false_val, Value(false));
+    ASSERT_FALSE(true_val == false_val);
+}
+
+TEST(vm_arithmetic_add) {
+    VM vm;
+    Chunk chunk;
+    
+    // Create constants 5 and 3
+    size_t const_idx1 = chunk.add_constant(Value(5));
+    size_t const_idx2 = chunk.add_constant(Value(3));
+    
+    // Generate bytecode: load 5, load 3, add
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx1));
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx2));
+    chunk.write_opcode(OpCode::OP_ADD);
+    chunk.write_opcode(OpCode::OP_RETURN);
+    
+    VMResult result = vm.run(chunk);
+    ASSERT_EQ(result, VMResult::OK);
+    ASSERT_EQ(vm.peek_stack_top().as_integer(), 8);
+}
+
+TEST(vm_arithmetic_multiply) {
+    VM vm;
+    Chunk chunk;
+    
+    // Create constants 4 and 7
+    size_t const_idx1 = chunk.add_constant(Value(4));
+    size_t const_idx2 = chunk.add_constant(Value(7));
+    
+    // Generate bytecode: load 4, load 7, multiply
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx1));
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx2));
+    chunk.write_opcode(OpCode::OP_MULTIPLY);
+    chunk.write_opcode(OpCode::OP_RETURN);
+    
+    VMResult result = vm.run(chunk);
+    ASSERT_EQ(result, VMResult::OK);
+    ASSERT_EQ(vm.peek_stack_top().as_integer(), 28);
+}
+
+TEST(vm_comparison_equal) {
+    VM vm;
+    Chunk chunk;
+    
+    // Create constants 5 and 5
+    size_t const_idx1 = chunk.add_constant(Value(5));
+    size_t const_idx2 = chunk.add_constant(Value(5));
+    
+    // Generate bytecode: load 5, load 5, equal
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx1));
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx2));
+    chunk.write_opcode(OpCode::OP_EQUAL);
+    chunk.write_opcode(OpCode::OP_RETURN);
+    
+    VMResult result = vm.run(chunk);
+    ASSERT_EQ(result, VMResult::OK);
+    Value result_val = vm.peek_stack_top();
+    ASSERT_TRUE(result_val.is_boolean());
+    ASSERT_TRUE(result_val.as_boolean());
+}
+
+TEST(vm_comparison_less_than) {
+    VM vm;
+    Chunk chunk;
+    
+    // Create constants 3 and 7
+    size_t const_idx1 = chunk.add_constant(Value(3));
+    size_t const_idx2 = chunk.add_constant(Value(7));
+    
+    // Generate bytecode: load 3, load 7, less than
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx1));
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx2));
+    chunk.write_opcode(OpCode::OP_LESS);
+    chunk.write_opcode(OpCode::OP_RETURN);
+    
+    VMResult result = vm.run(chunk);
+    ASSERT_EQ(result, VMResult::OK);
+    Value result_val = vm.peek_stack_top();
+    ASSERT_TRUE(result_val.is_boolean());
+    ASSERT_TRUE(result_val.as_boolean());
+}
+
+TEST(vm_division_by_zero) {
+    VM vm;
+    Chunk chunk;
+    
+    // Create constants 5 and 0
+    size_t const_idx1 = chunk.add_constant(Value(5));
+    size_t const_idx2 = chunk.add_constant(Value(0));
+    
+    // Generate bytecode: load 5, load 0, divide
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx1));
+    chunk.write_opcode(OpCode::OP_CONSTANT);
+    chunk.write_byte(static_cast<uint8_t>(const_idx2));
+    chunk.write_opcode(OpCode::OP_DIVIDE);
+    
+    VMResult result = vm.run(chunk);
+    ASSERT_EQ(result, VMResult::RUNTIME_ERROR);
+}
+
+TEST(end_to_end_arithmetic_expression) {
+    std::string source = "package main; fn main() i32 { return 2 + 3 * 4; }";
+    auto program = parse_source(source);
+    ASSERT_NOT_NULL(program);
+    
+    Compiler compiler;
+    Chunk chunk;
+    
+    CompileResult result = compiler.compile(*program, chunk);
+    ASSERT_EQ(result, CompileResult::OK);
+    
+    VM vm;
+    VMResult vm_result = vm.run(chunk);
+    ASSERT_EQ(vm_result, VMResult::OK);
+    
+    Value result_value = vm.peek_stack_top();
+    ASSERT_TRUE(result_value.is_integer());
+    ASSERT_EQ(result_value.as_integer(), 14); // 2 + (3 * 4) = 2 + 12 = 14
+}
+
+TEST(end_to_end_comparison_expression) {
+    std::string source = "package main; fn main() i32 { return 5 > 3; }";
+    auto program = parse_source(source);
+    ASSERT_NOT_NULL(program);
+    
+    Compiler compiler;
+    Chunk chunk;
+    
+    CompileResult result = compiler.compile(*program, chunk);
+    ASSERT_EQ(result, CompileResult::OK);
+    
+    VM vm;
+    VMResult vm_result = vm.run(chunk);
+    ASSERT_EQ(vm_result, VMResult::OK);
+    
+    Value result_value = vm.peek_stack_top();
+    ASSERT_TRUE(result_value.is_boolean());
+    ASSERT_TRUE(result_value.as_boolean()); // 5 > 3 is true
+}
+
 int main() {
     std::cout << "Running VM Tests..." << std::endl;
     
     // Value tests
     RUN_TEST(value_nil);
     RUN_TEST(value_integer);
+    RUN_TEST(value_boolean);
     RUN_TEST(value_equality);
     
     // Chunk tests
@@ -383,6 +553,13 @@ int main() {
     RUN_TEST(vm_reset);
     RUN_TEST(vm_debug_mode);
     
+    // Arithmetic and comparison VM tests
+    RUN_TEST(vm_arithmetic_add);
+    RUN_TEST(vm_arithmetic_multiply);
+    RUN_TEST(vm_comparison_equal);
+    RUN_TEST(vm_comparison_less_than);
+    RUN_TEST(vm_division_by_zero);
+    
     // Integration test
     RUN_TEST(vm_basic_function_return);
     
@@ -391,8 +568,10 @@ int main() {
     RUN_TEST(compiler_different_integer);
     RUN_TEST(compiler_error_no_functions);
     
-    // End-to-end integration test
+    // End-to-end integration tests
     RUN_TEST(end_to_end_basic_example);
+    RUN_TEST(end_to_end_arithmetic_expression);
+    RUN_TEST(end_to_end_comparison_expression);
     
     std::cout << "All tests passed!" << std::endl;
     return 0;

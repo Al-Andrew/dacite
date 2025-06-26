@@ -8,8 +8,22 @@ namespace dacite {
 
 /// Opcodes for the VM
 enum class OpCode : uint8_t {
-    OP_CONSTANT,    // Load a constant from the constant pool
-    OP_RETURN,      // Return from function
+    OP_CONSTANT,        // Load a constant from the constant pool
+    OP_RETURN,          // Return from function
+    
+    // Arithmetic operations
+    OP_ADD,             // Pop two values, add them, push result
+    OP_SUBTRACT,        // Pop two values, subtract them, push result  
+    OP_MULTIPLY,        // Pop two values, multiply them, push result
+    OP_DIVIDE,          // Pop two values, divide them, push result
+    
+    // Comparison operations
+    OP_EQUAL,           // Pop two values, compare for equality, push result
+    OP_NOT_EQUAL,       // Pop two values, compare for inequality, push result
+    OP_LESS,            // Pop two values, compare less than, push result
+    OP_LESS_EQUAL,      // Pop two values, compare less or equal, push result
+    OP_GREATER,         // Pop two values, compare greater than, push result
+    OP_GREATER_EQUAL,   // Pop two values, compare greater or equal, push result
 };
 
 /// A chunk of bytecode with associated constants
