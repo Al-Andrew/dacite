@@ -13,6 +13,12 @@
 },
 {
   "directory": "/home/runner/work/dacite/dacite/.build",
+  "command": "/usr/bin/c++ -std=gnu++23 -o CMakeFiles/dacite.dir/src/compiler.cpp.o -c /home/runner/work/dacite/dacite/src/compiler.cpp",
+  "file": "/home/runner/work/dacite/dacite/src/compiler.cpp",
+  "output": "CMakeFiles/dacite.dir/src/compiler.cpp.o"
+},
+{
+  "directory": "/home/runner/work/dacite/dacite/.build",
   "command": "/usr/bin/c++ -std=gnu++23 -o CMakeFiles/dacite.dir/src/lexer.cpp.o -c /home/runner/work/dacite/dacite/src/lexer.cpp",
   "file": "/home/runner/work/dacite/dacite/src/lexer.cpp",
   "output": "CMakeFiles/dacite.dir/src/lexer.cpp.o"
@@ -52,6 +58,12 @@
   "command": "/usr/bin/c++ -std=gnu++23 -o CMakeFiles/lexer_test.dir/src/chunk.cpp.o -c /home/runner/work/dacite/dacite/src/chunk.cpp",
   "file": "/home/runner/work/dacite/dacite/src/chunk.cpp",
   "output": "CMakeFiles/lexer_test.dir/src/chunk.cpp.o"
+},
+{
+  "directory": "/home/runner/work/dacite/dacite/.build",
+  "command": "/usr/bin/c++ -std=gnu++23 -o CMakeFiles/lexer_test.dir/src/compiler.cpp.o -c /home/runner/work/dacite/dacite/src/compiler.cpp",
+  "file": "/home/runner/work/dacite/dacite/src/compiler.cpp",
+  "output": "CMakeFiles/lexer_test.dir/src/compiler.cpp.o"
 },
 {
   "directory": "/home/runner/work/dacite/dacite/.build",
@@ -97,6 +109,12 @@
 },
 {
   "directory": "/home/runner/work/dacite/dacite/.build",
+  "command": "/usr/bin/c++ -std=gnu++23 -o CMakeFiles/parser_test.dir/src/compiler.cpp.o -c /home/runner/work/dacite/dacite/src/compiler.cpp",
+  "file": "/home/runner/work/dacite/dacite/src/compiler.cpp",
+  "output": "CMakeFiles/parser_test.dir/src/compiler.cpp.o"
+},
+{
+  "directory": "/home/runner/work/dacite/dacite/.build",
   "command": "/usr/bin/c++ -std=gnu++23 -o CMakeFiles/parser_test.dir/src/lexer.cpp.o -c /home/runner/work/dacite/dacite/src/lexer.cpp",
   "file": "/home/runner/work/dacite/dacite/src/lexer.cpp",
   "output": "CMakeFiles/parser_test.dir/src/lexer.cpp.o"
@@ -136,6 +154,12 @@
   "command": "/usr/bin/c++ -std=gnu++23 -o CMakeFiles/vm_test.dir/src/chunk.cpp.o -c /home/runner/work/dacite/dacite/src/chunk.cpp",
   "file": "/home/runner/work/dacite/dacite/src/chunk.cpp",
   "output": "CMakeFiles/vm_test.dir/src/chunk.cpp.o"
+},
+{
+  "directory": "/home/runner/work/dacite/dacite/.build",
+  "command": "/usr/bin/c++ -std=gnu++23 -o CMakeFiles/vm_test.dir/src/compiler.cpp.o -c /home/runner/work/dacite/dacite/src/compiler.cpp",
+  "file": "/home/runner/work/dacite/dacite/src/compiler.cpp",
+  "output": "CMakeFiles/vm_test.dir/src/compiler.cpp.o"
 },
 {
   "directory": "/home/runner/work/dacite/dacite/.build",

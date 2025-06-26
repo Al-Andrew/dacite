@@ -56,6 +56,12 @@ build CMakeFiles/dacite.dir/src/chunk.cpp.o: CXX_COMPILER__dacite_unscanned_ /ho
   OBJECT_DIR = CMakeFiles/dacite.dir
   OBJECT_FILE_DIR = CMakeFiles/dacite.dir/src
 
+build CMakeFiles/dacite.dir/src/compiler.cpp.o: CXX_COMPILER__dacite_unscanned_ /home/runner/work/dacite/dacite/src/compiler.cpp || cmake_object_order_depends_target_dacite
+  DEP_FILE = CMakeFiles/dacite.dir/src/compiler.cpp.o.d
+  FLAGS = -std=gnu++23
+  OBJECT_DIR = CMakeFiles/dacite.dir
+  OBJECT_FILE_DIR = CMakeFiles/dacite.dir/src
+
 build CMakeFiles/dacite.dir/src/lexer.cpp.o: CXX_COMPILER__dacite_unscanned_ /home/runner/work/dacite/dacite/src/lexer.cpp || cmake_object_order_depends_target_dacite
   DEP_FILE = CMakeFiles/dacite.dir/src/lexer.cpp.o.d
   FLAGS = -std=gnu++23
@@ -94,7 +100,7 @@ build CMakeFiles/dacite.dir/src/vm.cpp.o: CXX_COMPILER__dacite_unscanned_ /home/
 #############################################
 # Link the executable /home/runner/work/dacite/dacite/.bin/dacite
 
-build /home/runner/work/dacite/dacite/.bin/dacite: CXX_EXECUTABLE_LINKER__dacite_ CMakeFiles/dacite.dir/src/main.cpp.o CMakeFiles/dacite.dir/src/chunk.cpp.o CMakeFiles/dacite.dir/src/lexer.cpp.o CMakeFiles/dacite.dir/src/parser.cpp.o CMakeFiles/dacite.dir/src/token.cpp.o CMakeFiles/dacite.dir/src/value.cpp.o CMakeFiles/dacite.dir/src/vm.cpp.o
+build /home/runner/work/dacite/dacite/.bin/dacite: CXX_EXECUTABLE_LINKER__dacite_ CMakeFiles/dacite.dir/src/main.cpp.o CMakeFiles/dacite.dir/src/chunk.cpp.o CMakeFiles/dacite.dir/src/compiler.cpp.o CMakeFiles/dacite.dir/src/lexer.cpp.o CMakeFiles/dacite.dir/src/parser.cpp.o CMakeFiles/dacite.dir/src/token.cpp.o CMakeFiles/dacite.dir/src/value.cpp.o CMakeFiles/dacite.dir/src/vm.cpp.o
   DEP_FILE = CMakeFiles/dacite.dir/link.d
   LINK_FLAGS = -Wl,--dependency-file=CMakeFiles/dacite.dir/link.d
   OBJECT_DIR = CMakeFiles/dacite.dir
@@ -120,6 +126,12 @@ build CMakeFiles/lexer_test.dir/tests/lexer_test.cpp.o: CXX_COMPILER__lexer_test
 
 build CMakeFiles/lexer_test.dir/src/chunk.cpp.o: CXX_COMPILER__lexer_test_unscanned_ /home/runner/work/dacite/dacite/src/chunk.cpp || cmake_object_order_depends_target_lexer_test
   DEP_FILE = CMakeFiles/lexer_test.dir/src/chunk.cpp.o.d
+  FLAGS = -std=gnu++23
+  OBJECT_DIR = CMakeFiles/lexer_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/lexer_test.dir/src
+
+build CMakeFiles/lexer_test.dir/src/compiler.cpp.o: CXX_COMPILER__lexer_test_unscanned_ /home/runner/work/dacite/dacite/src/compiler.cpp || cmake_object_order_depends_target_lexer_test
+  DEP_FILE = CMakeFiles/lexer_test.dir/src/compiler.cpp.o.d
   FLAGS = -std=gnu++23
   OBJECT_DIR = CMakeFiles/lexer_test.dir
   OBJECT_FILE_DIR = CMakeFiles/lexer_test.dir/src
@@ -162,7 +174,7 @@ build CMakeFiles/lexer_test.dir/src/vm.cpp.o: CXX_COMPILER__lexer_test_unscanned
 #############################################
 # Link the executable /home/runner/work/dacite/dacite/.bin/lexer_test
 
-build /home/runner/work/dacite/dacite/.bin/lexer_test: CXX_EXECUTABLE_LINKER__lexer_test_ CMakeFiles/lexer_test.dir/tests/lexer_test.cpp.o CMakeFiles/lexer_test.dir/src/chunk.cpp.o CMakeFiles/lexer_test.dir/src/lexer.cpp.o CMakeFiles/lexer_test.dir/src/parser.cpp.o CMakeFiles/lexer_test.dir/src/token.cpp.o CMakeFiles/lexer_test.dir/src/value.cpp.o CMakeFiles/lexer_test.dir/src/vm.cpp.o
+build /home/runner/work/dacite/dacite/.bin/lexer_test: CXX_EXECUTABLE_LINKER__lexer_test_ CMakeFiles/lexer_test.dir/tests/lexer_test.cpp.o CMakeFiles/lexer_test.dir/src/chunk.cpp.o CMakeFiles/lexer_test.dir/src/compiler.cpp.o CMakeFiles/lexer_test.dir/src/lexer.cpp.o CMakeFiles/lexer_test.dir/src/parser.cpp.o CMakeFiles/lexer_test.dir/src/token.cpp.o CMakeFiles/lexer_test.dir/src/value.cpp.o CMakeFiles/lexer_test.dir/src/vm.cpp.o
   DEP_FILE = CMakeFiles/lexer_test.dir/link.d
   LINK_FLAGS = -Wl,--dependency-file=CMakeFiles/lexer_test.dir/link.d
   OBJECT_DIR = CMakeFiles/lexer_test.dir
@@ -188,6 +200,12 @@ build CMakeFiles/parser_test.dir/tests/parser_test.cpp.o: CXX_COMPILER__parser_t
 
 build CMakeFiles/parser_test.dir/src/chunk.cpp.o: CXX_COMPILER__parser_test_unscanned_ /home/runner/work/dacite/dacite/src/chunk.cpp || cmake_object_order_depends_target_parser_test
   DEP_FILE = CMakeFiles/parser_test.dir/src/chunk.cpp.o.d
+  FLAGS = -std=gnu++23
+  OBJECT_DIR = CMakeFiles/parser_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/parser_test.dir/src
+
+build CMakeFiles/parser_test.dir/src/compiler.cpp.o: CXX_COMPILER__parser_test_unscanned_ /home/runner/work/dacite/dacite/src/compiler.cpp || cmake_object_order_depends_target_parser_test
+  DEP_FILE = CMakeFiles/parser_test.dir/src/compiler.cpp.o.d
   FLAGS = -std=gnu++23
   OBJECT_DIR = CMakeFiles/parser_test.dir
   OBJECT_FILE_DIR = CMakeFiles/parser_test.dir/src
@@ -230,7 +248,7 @@ build CMakeFiles/parser_test.dir/src/vm.cpp.o: CXX_COMPILER__parser_test_unscann
 #############################################
 # Link the executable /home/runner/work/dacite/dacite/.bin/parser_test
 
-build /home/runner/work/dacite/dacite/.bin/parser_test: CXX_EXECUTABLE_LINKER__parser_test_ CMakeFiles/parser_test.dir/tests/parser_test.cpp.o CMakeFiles/parser_test.dir/src/chunk.cpp.o CMakeFiles/parser_test.dir/src/lexer.cpp.o CMakeFiles/parser_test.dir/src/parser.cpp.o CMakeFiles/parser_test.dir/src/token.cpp.o CMakeFiles/parser_test.dir/src/value.cpp.o CMakeFiles/parser_test.dir/src/vm.cpp.o
+build /home/runner/work/dacite/dacite/.bin/parser_test: CXX_EXECUTABLE_LINKER__parser_test_ CMakeFiles/parser_test.dir/tests/parser_test.cpp.o CMakeFiles/parser_test.dir/src/chunk.cpp.o CMakeFiles/parser_test.dir/src/compiler.cpp.o CMakeFiles/parser_test.dir/src/lexer.cpp.o CMakeFiles/parser_test.dir/src/parser.cpp.o CMakeFiles/parser_test.dir/src/token.cpp.o CMakeFiles/parser_test.dir/src/value.cpp.o CMakeFiles/parser_test.dir/src/vm.cpp.o
   DEP_FILE = CMakeFiles/parser_test.dir/link.d
   LINK_FLAGS = -Wl,--dependency-file=CMakeFiles/parser_test.dir/link.d
   OBJECT_DIR = CMakeFiles/parser_test.dir
@@ -256,6 +274,12 @@ build CMakeFiles/vm_test.dir/tests/vm_test.cpp.o: CXX_COMPILER__vm_test_unscanne
 
 build CMakeFiles/vm_test.dir/src/chunk.cpp.o: CXX_COMPILER__vm_test_unscanned_ /home/runner/work/dacite/dacite/src/chunk.cpp || cmake_object_order_depends_target_vm_test
   DEP_FILE = CMakeFiles/vm_test.dir/src/chunk.cpp.o.d
+  FLAGS = -std=gnu++23
+  OBJECT_DIR = CMakeFiles/vm_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/vm_test.dir/src
+
+build CMakeFiles/vm_test.dir/src/compiler.cpp.o: CXX_COMPILER__vm_test_unscanned_ /home/runner/work/dacite/dacite/src/compiler.cpp || cmake_object_order_depends_target_vm_test
+  DEP_FILE = CMakeFiles/vm_test.dir/src/compiler.cpp.o.d
   FLAGS = -std=gnu++23
   OBJECT_DIR = CMakeFiles/vm_test.dir
   OBJECT_FILE_DIR = CMakeFiles/vm_test.dir/src
@@ -298,7 +322,7 @@ build CMakeFiles/vm_test.dir/src/vm.cpp.o: CXX_COMPILER__vm_test_unscanned_ /hom
 #############################################
 # Link the executable /home/runner/work/dacite/dacite/.bin/vm_test
 
-build /home/runner/work/dacite/dacite/.bin/vm_test: CXX_EXECUTABLE_LINKER__vm_test_ CMakeFiles/vm_test.dir/tests/vm_test.cpp.o CMakeFiles/vm_test.dir/src/chunk.cpp.o CMakeFiles/vm_test.dir/src/lexer.cpp.o CMakeFiles/vm_test.dir/src/parser.cpp.o CMakeFiles/vm_test.dir/src/token.cpp.o CMakeFiles/vm_test.dir/src/value.cpp.o CMakeFiles/vm_test.dir/src/vm.cpp.o
+build /home/runner/work/dacite/dacite/.bin/vm_test: CXX_EXECUTABLE_LINKER__vm_test_ CMakeFiles/vm_test.dir/tests/vm_test.cpp.o CMakeFiles/vm_test.dir/src/chunk.cpp.o CMakeFiles/vm_test.dir/src/compiler.cpp.o CMakeFiles/vm_test.dir/src/lexer.cpp.o CMakeFiles/vm_test.dir/src/parser.cpp.o CMakeFiles/vm_test.dir/src/token.cpp.o CMakeFiles/vm_test.dir/src/value.cpp.o CMakeFiles/vm_test.dir/src/vm.cpp.o
   DEP_FILE = CMakeFiles/vm_test.dir/link.d
   LINK_FLAGS = -Wl,--dependency-file=CMakeFiles/vm_test.dir/link.d
   OBJECT_DIR = CMakeFiles/vm_test.dir
