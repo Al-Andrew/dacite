@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/dacite.dir/link.d CMakeFiles/dacite.dir/src/main.cpp.o CMakeFiles/dacite.dir/src/lexer.cpp.o CMakeFiles/dacite.dir/src/parser.cpp.o CMakeFiles/dacite.dir/src/token.cpp.o -o /home/runner/work/dacite/dacite/.bin/dacite
