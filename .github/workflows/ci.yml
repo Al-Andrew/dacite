@@ -29,7 +29,9 @@ jobs:
       run: cmake --build --preset ${{ matrix.build_type }}
       
     - name: Run tests
-      run: ./.bin/lexer_test
+      run: |
+        ./.bin/lexer_test
+        ./.bin/parser_test
       
     - name: Test dacite executable
       run: |
